@@ -1,0 +1,52 @@
+name: Main
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  registry-url: https://registry.npmjs.org/
+
+            - name: Install dependencies
+              run: npm i
+
+            - name: Package theme
+              run: mkdir dist && npx @vscode/vsce package --out "dist/"
+
+            - name: Upload build
+              uses: actions/upload-artifact@v4
+              with:
+                  path: dist/
+
+    release:
+        needs:
+            - build
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Download build
+              uses: actions/download-artifact@v4
+              with:
+                  path: dist/
+
+            - name: Publish on marketplace
+              run: npx @vscode/vsce publish
+              env:
+                  VSCE_PAT: ${{secrets.VSCE_PAT}}

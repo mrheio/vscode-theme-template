@@ -1,0 +1,26 @@
+{
+	"name": "replace-this-with-the-name-of-the-theme",
+	"displayName": "Replace this with the name of the theme",
+	"description": "Replace this with the description of your theme",
+	"version": "0.0.1",
+	"publisher": "your-publisher-name",
+	"engines": {
+		"vscode": "^1.85.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Replace this with the name shown to the user",
+				"uiTheme": "vs-dark",
+				"path": "./themes/theme.json"
+			}
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "your-theme-repository"
+	}
+}
